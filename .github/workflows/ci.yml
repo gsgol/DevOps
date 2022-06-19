@@ -6,7 +6,6 @@ on:
   pull_request:
     branches: [ test ]
 
-
 env:
   app_name: app_${{ github.run_number }}
 
