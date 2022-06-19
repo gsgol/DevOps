@@ -36,3 +36,4 @@ jobs:
             Author: ${{ github.actor }}
             Act: ${{ github.event_name }}
             Status: ${{ job.status }}
+          document: ${{ env.app_name }}_${{ runner.os }}
