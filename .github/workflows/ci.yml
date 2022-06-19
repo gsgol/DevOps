@@ -27,16 +27,16 @@ jobs:
           retention-days: 5
       
       - name: Telegram Message
-         if: ${{ always() }}
-         uses: appleboy/telegram-action@master
-         with:
-            to: ${{ secrets.TELEGRAM_CHAT_ID }}
-            token: ${{ secrets.TELEGRAM_TOKEN }}
-            message: |
-              Repository: ${{ github.repository }}
-              Author: ${{ github.actor }}
-              Act: ${{ github.event_name }}
-              Status: ${{ job.status }}
+        if: ${{ always() }}
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_CHAT_ID }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            Repository: ${{ github.repository }}
+            Author: ${{ github.actor }}
+            Act: ${{ github.event_name }}
+            Status: ${{ job.status }}
         
          
       
