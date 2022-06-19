@@ -1,0 +1,39 @@
+name: CI
+
+on:
+  push:
+    branches: [ test ]
+  pull_request:
+    branches: [ test ]
+
+env:
+  app_name: app_${{ github.run_number }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build App
+        run: g++ lab.cpp -o ${{ env.app_name }}_${{ runner.os }}
+        
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: my-artifact
+          path: ${{ env.app_name }}_${{ runner.os }}
+          retention-days: 5
+      
+      - name: Telegram Message
+        if: ${{ always() }}
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_CHAT_ID }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            Repository: ${{ github.repository }}
+            Author: ${{ github.actor }}
+            Act: ${{ github.event_name }}
+            Status: ${{ job.status }}
+          document: ${{ env.app_name }}_${{ runner.os }}
